@@ -1,16 +1,21 @@
-// 清空请求的空参数
-export const cleanObject = (object: any) => {
-  const result = { ...object };
-  Object.keys(result).forEach((key) => {
-    const value = result[key];
-    if (isFalsy(value)) {
-      delete result[key];
-    }
-  });
-  return result;
+import { useEffect, useState } from "react";
+
+export * from "./server";
+
+export const useMount = (callback: any) => {
+  useEffect(() => {
+    callback();
+  }, []);
 };
 
-// 判断是否为假
-export const isFalsy = (value: any) => {
-  return value === 0 ? false : !value;
+export const useDebounce = (value: any, delay: number) => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setDebouncedValue(value), delay);
+    // 在上一个useEffect处理完后运行
+    return () => clearTimeout(timeout);
+  }, [value, delay]);
+
+  return debouncedValue;
 };
