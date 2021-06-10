@@ -1,4 +1,5 @@
 import { apiUrl, User } from "../utils/constant";
+import { query } from "../utils";
 
 //登陆、注册服务组件
 
@@ -25,6 +26,11 @@ export const login = (data: { username: string; password: string }) => {
       return Promise.reject(data);
     }
   });
+  // const token = getToken();
+  // console.log(token);
+  // return query("login",
+  //     {data, token, method: "POST", body: JSON.stringify(data)});data
+  // return
 };
 export const register = (data: { username: string; password: string }) => {
   return fetch(`${apiUrl}/register`, {

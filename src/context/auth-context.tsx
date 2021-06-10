@@ -1,6 +1,7 @@
 import React, { ReactNode, useState } from "react";
 import * as auth from "./auth-provider";
 import { User } from "../utils/constant";
+import { query, useMount } from "../utils";
 
 interface AuthForm {
   username: string;
@@ -14,6 +15,16 @@ interface ContextType {
   logout: () => Promise<void>;
 }
 
+const initUser = async () => {
+  let user = null;
+  const token = auth.getToken();
+  if (token) {
+    const data = await query("me", { token });
+    user = data.user;
+  }
+  return user;
+};
+
 const AuthContext = React.createContext<ContextType | undefined>(undefined);
 AuthContext.displayName = "AuthContext";
 
@@ -23,6 +34,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = (form: AuthForm) => auth.login(form).then(setUser);
   const register = (form: AuthForm) => auth.register(form).then(setUser);
   const logout = () => auth.logout().then(() => setUser(null));
+
+  useMount(() => {
+    initUser().then(setUser);
+  });
 
   return (
     <AuthContext.Provider
