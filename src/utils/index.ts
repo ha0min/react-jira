@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 
 export * from "./server";
 
-export const useMount = (callback: any) => {
+export const useMount = (callback: () => void) => {
   useEffect(() => {
-    callback();
+    return callback();
   }, []);
 };
 
-export const useDebounce = (value: any, delay: number) => {
+export const useDebounce = <V>(value: V, delay?: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {
@@ -18,4 +18,31 @@ export const useDebounce = (value: any, delay: number) => {
   }, [value, delay]);
 
   return debouncedValue;
+};
+
+export const useArray = <V>(array: V[]) => {
+  const [value, setValue] = useState(array);
+
+  const add = (item: V) => {
+    setValue([...value, item]);
+  };
+
+  const removeIndex = (index: number) => {
+    if (index < 0 || index > value.length - 1) {
+      return;
+    }
+    const newArray = value.slice().splice(index, 1);
+    setValue(newArray);
+  };
+
+  const clear = () => {
+    setValue([]);
+  };
+
+  return {
+    value,
+    add,
+    removeIndex,
+    clear,
+  };
 };
