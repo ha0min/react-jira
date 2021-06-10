@@ -1,7 +1,8 @@
 import React from "react";
+import { User } from "../../utils/constant";
 
 interface PropsType {
-  users: any;
+  users: User[];
   param: any;
   setParam: (param: any) => void;
 }
