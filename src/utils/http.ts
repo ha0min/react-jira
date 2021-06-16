@@ -3,18 +3,18 @@ import { apiUrl } from "./constant";
 import qs from "qs";
 import * as auth from "../context/auth-provider";
 import { useAuth } from "../context/auth-context";
-import * as http from "http";
 
 interface httpConfigType extends RequestInit {
   token?: string;
   data?: object;
 }
 
-export const cleanObject = (object: any) => {
+// 去除无意义对象键值对，其中传入对象
+export const cleanObject = (object: { [key: string]: unknown }) => {
   const result = { ...object };
   Object.keys(result).forEach((key) => {
     const value = result[key];
-    if (isFalsy(value)) {
+    if (isVoid(value)) {
       delete result[key];
     }
   });
@@ -24,6 +24,11 @@ export const cleanObject = (object: any) => {
 // 判断是否为假
 export const isFalsy = (value: any) => {
   return value === 0 ? false : !value;
+};
+
+// 判断是否为空
+export const isVoid = (value: any) => {
+  return value === undefined || value === null || value === "";
 };
 
 // 封装的请求函数

@@ -1,10 +1,10 @@
-import React, { FormEvent } from "react";
+import React from "react";
 import { useAuth } from "../../context/auth-context";
-import { Button, Form, Input } from "antd";
+import { Form, Input } from "antd";
 import { LongButton } from "./sign-in";
 
 export const Login = () => {
-  const { login, user } = useAuth();
+  const { login } = useAuth();
   const handleSubmit = (values: { username: string; password: string }) => {
     // console.log(password);
     login(values);

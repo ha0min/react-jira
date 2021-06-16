@@ -18,9 +18,9 @@ export const SignIn = () => {
         <Title>{registerNow ? "👏注册" : "👋登陆"}</Title>
         {registerNow ? <Register /> : <Login />}
         <Divider />
-        <a onClick={() => setRegisterNow(!registerNow)}>
+        <Button type={"link"} onClick={() => setRegisterNow(!registerNow)}>
           {registerNow ? "已有账号？去登陆" : "没有账号？去注册"}
-        </a>
+        </Button>
       </SignInCard>
     </Container>
   );

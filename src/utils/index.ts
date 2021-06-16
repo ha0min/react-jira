@@ -5,6 +5,7 @@ export * from "./http";
 export const useMount = (callback: () => void) => {
   useEffect(() => {
     return callback();
+    // TODO 依赖项里加上callback会无限循环
   }, []);
 };
 
