@@ -1,4 +1,4 @@
-import { Input, Select } from "antd";
+import { Form, Input, Select } from "antd";
 import React from "react";
 import { User } from "../../utils/constant";
 
@@ -10,10 +10,11 @@ interface PropsType {
 
 export const SearchPanel = ({ users, param, setParam }: PropsType) => {
   return (
-    <form action="">
-      <div>
+    <Form style={{ marginBottom: "2rem" }} layout={"inline"}>
+      <Form.Item>
         <Input
           type="text"
+          placeholder={"请输入项目名"}
           value={param.name}
           onChange={(evt) =>
             setParam({
@@ -22,6 +23,8 @@ export const SearchPanel = ({ users, param, setParam }: PropsType) => {
             })
           }
         />
+      </Form.Item>
+      <Form.Item>
         <Select
           value={param.personId}
           onChange={(value) => {
@@ -38,7 +41,7 @@ export const SearchPanel = ({ users, param, setParam }: PropsType) => {
             </Select.Option>
           ))}
         </Select>
-      </div>
-    </form>
+      </Form.Item>
+    </Form>
   );
 };

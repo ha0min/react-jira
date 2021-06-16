@@ -15,4 +15,5 @@ export interface Project {
   personId: string;
   pin: boolean;
   organization: string;
+  created: number;
 }
