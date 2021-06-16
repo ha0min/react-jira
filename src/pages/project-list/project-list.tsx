@@ -3,8 +3,8 @@ import { List } from "./list";
 import { SearchPanel } from "./search-panel";
 import { useEffect, useState } from "react";
 import { cleanObject, useDebounce, useHttp, useMount } from "../../utils";
-import qs from "qs";
-import { apiUrl } from "../../utils/constant";
+// import qs from "qs";
+// import { apiUrl } from "../../utils/constant";
 
 export const ProjectList = () => {
   const [param, setParam] = useState({
