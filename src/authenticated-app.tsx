@@ -13,7 +13,7 @@ export const AuthenticatedApp = () => {
     <Container>
       <Header between={true}>
         <HeaderLeft gap={true}>
-          <SoftwareLogo width={"17rem"} color={"#2684FF"} />
+          <SoftwareLogo width={"17rem"} color={"#2684ff"} />
           <h2>项目</h2>
           <h2>用户</h2>
         </HeaderLeft>

@@ -1,12 +1,14 @@
 import React from "react";
 import { List } from "./list";
 import { SearchPanel } from "./search-panel";
-import { useEffect, useState } from "react";
-import { cleanObject, useDebounce, useHttp, useMount } from "../../utils";
+import { useState } from "react";
+import { useDebounce } from "../../utils";
 import styled from "@emotion/styled";
-import Title from "antd/lib/typography/Title";
-// import qs from "qs";
-// import { apiUrl } from "../../utils/constant";
+// import Title from "antd/lib/typography/Title";
+import { Typography } from "antd";
+// import {useAsync} from "../../utils/use-async";
+import { useProjects } from "../../utils/use-projects";
+import { useUsers } from "../../utils/use-users";
 
 export const ProjectList = () => {
   const [param, setParam] = useState({
@@ -15,39 +17,29 @@ export const ProjectList = () => {
   });
   const debounceParam = useDebounce(param, 1500);
 
-  const [users, setUsers] = useState([]);
-  const [projects, setProjects] = useState([]);
-  const client = useHttp();
-
-  useMount(() => {
-    client("users").then(setUsers);
-    // fetch(`${apiUrl}/users`).then(async (response) => {
-    //   if (response.ok) {
-    //     setUsers(await response.json());
-    //   }
-    // });
-  });
-
-  useEffect(() => {
-    // fetch(
-    //   `${apiUrl}/projects/?${qs.stringify(cleanObject(debounceParam))}`
-    // ).then(async (response) => {
-    //   if (response.ok) {
-    //     setProjects(await response.json());
-    //   }
-    // });
-    client("projects", { data: cleanObject(debounceParam) }).then(setProjects);
-  }, [debounceParam]);
+  const {
+    isLoading: loading,
+    error,
+    data: projects,
+  } = useProjects(debounceParam);
+  const { data: users } = useUsers();
 
   return (
     <ProjectListContainer>
-      <Title>项目列表</Title>
+      <Typography.Title>项目列表</Typography.Title>
       <SearchPanel
-        users={users}
+        users={users || []}
         param={param}
         setParam={setParam}
       ></SearchPanel>
-      <List projects={projects} users={users}></List>
+      {error ? (
+        <Typography.Text type={"danger"}>{error.message}</Typography.Text>
+      ) : null}
+      <List
+        loading={loading}
+        dataSource={projects || []}
+        users={users || []}
+      ></List>
     </ProjectListContainer>
   );
 };

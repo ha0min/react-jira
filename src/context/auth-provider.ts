@@ -1,5 +1,4 @@
 import { apiUrl, User } from "../utils/constant";
-import { query } from "../utils";
 
 //登陆、注册服务组件
 

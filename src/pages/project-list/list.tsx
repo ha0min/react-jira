@@ -1,16 +1,16 @@
 import React from "react";
-import { Table } from "antd";
-import { Project, User } from "../../utils/constant";
+import { Table, TableProps } from "antd";
+import { Project } from "../../utils/constant";
 import dayjs from "dayjs";
 
-interface PropsType {
-  projects: Project[];
+interface ListPropsType extends TableProps<Project> {
   users: any;
 }
 
-export const List = ({ projects, users }: PropsType) => {
+export const List = ({ users, ...props }: ListPropsType) => {
   return (
     <Table
+      rowKey={"id"}
       pagination={false}
       columns={[
         {
@@ -22,6 +22,7 @@ export const List = ({ projects, users }: PropsType) => {
         {
           title: "部门",
           dataIndex: "organization",
+          sorter: (a, b) => a.organization.localeCompare(b.organization),
         },
         {
           title: "负责人",
@@ -29,7 +30,7 @@ export const List = ({ projects, users }: PropsType) => {
           render(value, projectItem) {
             return (
               <span>
-                {users.find((user: User) => user.id === projectItem.personId)
+                {users.find((user: any) => user.id === projectItem.personId)
                   ?.name || "未知"}
               </span>
             );
@@ -37,6 +38,7 @@ export const List = ({ projects, users }: PropsType) => {
         },
         {
           title: "创建时间",
+          sorter: (a, b) => a.created - b.created,
           render(value, project) {
             return (
               <span>
@@ -48,28 +50,7 @@ export const List = ({ projects, users }: PropsType) => {
           },
         },
       ]}
-      dataSource={projects}
+      {...props}
     />
   );
-  // return (
-  //   <table>
-  //     <thead>
-  //       <tr>
-  //         <th>名称</th>
-  //         <th>负责人</th>
-  //       </tr>
-  //     </thead>
-  //     <tbody>
-  //       {projects.map((projectItem: any) => (
-  //         <tr key={projectItem.name}>
-  //           <td>{projectItem.name}</td>
-  //           <td>
-  //             {users.find((user: any) => user.id === projectItem.personId)
-  //               ?.name || "未知"}
-  //           </td>
-  //         </tr>
-  //       ))}
-  //     </tbody>
-  //   </table>
-  // );
 };
