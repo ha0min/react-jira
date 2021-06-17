@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Login } from "./login";
 import { Register } from "./register";
-import { Button, Card, Divider } from "antd";
+import { Button, Card, Divider, message } from "antd";
 import styled from "@emotion/styled";
 import logo from "../../assets/images/logo.svg";
 import left from "../../assets/images/left.svg";
@@ -9,6 +9,11 @@ import right from "../../assets/images/right.svg";
 
 export const SignIn = () => {
   const [registerNow, setRegisterNow] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  // useEffect(() => {
+  //     console.log("useEffect", error);
+  // }, [error]);
 
   return (
     <Container>
@@ -16,7 +21,12 @@ export const SignIn = () => {
       <Background />
       <SignInCard>
         <Title>{registerNow ? "👏注册" : "👋登陆"}</Title>
-        {registerNow ? <Register /> : <Login />}
+        {error ? message.error(error.message, 3, () => setError(null)) : null}
+        {registerNow ? (
+          <Register onError={setError} />
+        ) : (
+          <Login onError={setError} />
+        )}
         <Divider />
         <Button type={"link"} onClick={() => setRegisterNow(!registerNow)}>
           {registerNow ? "已有账号？去登陆" : "没有账号？去注册"}
