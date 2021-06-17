@@ -22,7 +22,7 @@ export const login = (data: { username: string; password: string }) => {
     if (response.ok) {
       return handleUserResponse(await response.json());
     } else {
-      return Promise.reject(data);
+      return Promise.reject(await response.json());
     }
   });
   // const token = getToken();
@@ -31,6 +31,8 @@ export const login = (data: { username: string; password: string }) => {
   //     {data, token, method: "POST", body: JSON.stringify(data)});data
   // return
 };
+
+// 注册
 export const register = (data: { username: string; password: string }) => {
   return fetch(`${apiUrl}/register`, {
     method: "POST",
@@ -42,7 +44,7 @@ export const register = (data: { username: string; password: string }) => {
     if (response.ok) {
       return handleUserResponse(await response.json());
     } else {
-      return Promise.reject(data);
+      return Promise.reject(await response.json());
     }
   });
 };

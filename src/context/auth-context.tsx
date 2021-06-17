@@ -2,6 +2,11 @@ import React, { ReactNode, useState } from "react";
 import * as auth from "./auth-provider";
 import { User } from "../utils/constant";
 import { query, useMount } from "../utils";
+import { useAsync } from "../utils/use-async";
+import {
+  BaseFullPageError,
+  BaseFullPageLoading,
+} from "../component/base/base-fullpage-message";
 
 interface AuthForm {
   username: string;
@@ -29,15 +34,39 @@ const AuthContext = React.createContext<ContextType | undefined>(undefined);
 AuthContext.displayName = "AuthContext";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const {
+    run,
+    error,
+    data: user,
+    setData: setUser,
+    isLoading,
+    isIdle,
+    isError,
+    isSuccess,
+  } = useAsync<User | null>();
 
   const login = (form: AuthForm) => auth.login(form).then(setUser);
   const register = (form: AuthForm) => auth.register(form).then(setUser);
   const logout = () => auth.logout().then(() => setUser(null));
 
   useMount(() => {
-    initUser().then(setUser);
+    run(initUser());
   });
+
+  if (isIdle || isLoading) {
+    return <BaseFullPageLoading />;
+  }
+
+  if (isError) {
+    return (
+      <BaseFullPageError
+        error={error}
+        handleButtonClick={() => {
+          auth.logout().then(() => setUser(null));
+        }}
+      />
+    );
+  }
 
   return (
     <AuthContext.Provider
