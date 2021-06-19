@@ -11,7 +11,7 @@ export const ProjectDetail = () => {
       <Routes>
         <Route path={"/kanban"} element={<KanBan />} />
         <Route path={"/epic"} element={<Epic />} />
-        {/*<Navigate to={"/kanban"} />*/}
+        <Navigate to={"kanban"} />
       </Routes>
     </div>
   );

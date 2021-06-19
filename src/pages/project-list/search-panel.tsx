@@ -4,8 +4,11 @@ import { User } from "../../utils/constant";
 
 interface PropsType {
   users: User[];
-  param: any;
-  setParam: (param: any) => void;
+  param: {
+    name: string;
+    personId: string;
+  };
+  setParam: (param: PropsType["param"]) => void;
 }
 
 export const SearchPanel = ({ users, param, setParam }: PropsType) => {
@@ -36,7 +39,7 @@ export const SearchPanel = ({ users, param, setParam }: PropsType) => {
         >
           <Select.Option value={""}>负责人</Select.Option>
           {users.map((userItem: any) => (
-            <Select.Option value={userItem.id} key={userItem.name}>
+            <Select.Option value={String(userItem.id)} key={userItem.name}>
               {userItem.name}
             </Select.Option>
           ))}

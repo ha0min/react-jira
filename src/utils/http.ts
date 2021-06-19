@@ -1,8 +1,10 @@
-// 清空请求的空参数
+// http所需相关工
 import { apiUrl } from "./constant";
 import qs from "qs";
 import * as auth from "../context/auth-provider";
 import { useAuth } from "../context/auth-context";
+import { URLSearchParamsInit, useSearchParams } from "react-router-dom";
+import { useMemo } from "react";
 
 interface httpConfigType extends RequestInit {
   token?: string;
@@ -72,4 +74,27 @@ export const useHttp = () => {
   const { user } = useAuth();
   return (...[endpoint, config]: Parameters<typeof query>) =>
     query(endpoint, { ...config, token: user?.token });
+};
+
+export const useUrlParam = <K extends string>(keys: K[]) => {
+  const [searchParams, setSearchParam] = useSearchParams();
+  return [
+    useMemo(
+      () =>
+        keys.reduce((prev, key) => {
+          const o = { ...prev, [key]: searchParams.get(key) || "" };
+          console.log("reduce", o);
+          return o;
+        }, {} as { [key in K]: string }),
+      [searchParams]
+    ),
+    (params: Partial<{ [key in K]: unknown }>) => {
+      const o = cleanObject({
+        ...Object.fromEntries(searchParams),
+        ...params,
+      }) as URLSearchParamsInit;
+      console.log("clean Object", o);
+      return setSearchParam(o);
+    },
+  ] as const;
 };

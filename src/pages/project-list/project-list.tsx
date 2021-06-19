@@ -9,14 +9,11 @@ import { Typography } from "antd";
 // import {useAsync} from "../../utils/use-async";
 import { useProjects } from "../../utils/use-projects";
 import { useUsers } from "../../utils/use-users";
+import { useUrlParam } from "../../utils/http";
 
 export const ProjectList = () => {
-  const [param, setParam] = useState({
-    name: "",
-    personId: "",
-  });
+  const [param, setParam] = useUrlParam(["name", "personId"]);
   const debounceParam = useDebounce(param, 1500);
-
   const {
     isLoading: loading,
     error,
