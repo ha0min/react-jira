@@ -5,8 +5,8 @@ import { Button, Dropdown, Menu } from "antd";
 import { ReactComponent as SoftwareLogo } from "./assets/images/software-logo.svg";
 import styled from "@emotion/styled";
 import { BaseRow } from "./component/base/base-row";
-import { useDocumentTitle } from "./utils/base";
-import { Route, Routes } from "react-router";
+import { redirectRoute, useDocumentTitle } from "./utils/base";
+import { Navigate, Route, Routes } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ProjectDetail } from "./pages/project-detail/project-detail";
 
@@ -25,6 +25,7 @@ export const AuthenticatedApp = () => {
               path={"/projects/:projectId/*"}
               element={<ProjectDetail />}
             />
+            <Navigate to={"/projects"} />
           </Routes>
         </Router>
       </Body>
@@ -38,7 +39,9 @@ const PageHeader = () => {
   return (
     <Header between={true}>
       <HeaderLeft gap={true}>
-        <SoftwareLogo width={"17rem"} color={"#2684ff"} />
+        <Button type={"link"} onClick={redirectRoute}>
+          <SoftwareLogo width={"17rem"} color={"#2684ff"} />
+        </Button>
         <h2>项目</h2>
         <h2>用户</h2>
       </HeaderLeft>

@@ -73,3 +73,7 @@ export const useDocumentTitle = (
     };
   });
 };
+
+// 重置路由
+export const redirectRoute = () =>
+  (window.location.href = window.location.origin);
