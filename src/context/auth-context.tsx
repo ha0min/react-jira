@@ -1,7 +1,8 @@
 import React, { ReactNode, useState } from "react";
 import * as auth from "./auth-provider";
 import { User } from "../utils/constant";
-import { query, useMount } from "../utils";
+import { query } from "../utils/http";
+import { useMount } from "../utils/base";
 import { useAsync } from "../utils/use-async";
 import {
   BaseFullPageError,

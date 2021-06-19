@@ -2,7 +2,7 @@ import React from "react";
 import { List } from "./list";
 import { SearchPanel } from "./search-panel";
 import { useState } from "react";
-import { useDebounce } from "../../utils";
+import { useDebounce } from "../../utils/base";
 import styled from "@emotion/styled";
 // import Title from "antd/lib/typography/Title";
 import { Typography } from "antd";

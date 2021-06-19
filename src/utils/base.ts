@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+// 基础工具
 
-export * from "./http";
+import { useEffect, useRef, useState } from "react";
 
+// 自定义初始化钩子
 export const useMount = (callback: () => void) => {
   useEffect(() => {
     return callback();
@@ -9,6 +10,7 @@ export const useMount = (callback: () => void) => {
   }, []);
 };
 
+// 自定义 debounce 钩子
 export const useDebounce = <V>(value: V, delay?: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
@@ -21,6 +23,7 @@ export const useDebounce = <V>(value: V, delay?: number) => {
   return debouncedValue;
 };
 
+// 队列操作
 export const useArray = <V>(array: V[]) => {
   const [value, setValue] = useState(array);
 
@@ -46,4 +49,27 @@ export const useArray = <V>(array: V[]) => {
     removeIndex,
     clear,
   };
+};
+
+// 设置浏览器标题
+// @title: 浏览器标题
+// @keepOnUnmount: 在卸载组件时是否保留传入标题
+export const useDocumentTitle = (
+  title: string,
+  keepOnUnmount: boolean = true
+) => {
+  const oldTitle = useRef(document.title).current;
+  // const oldTitle = document.title;
+
+  useEffect(() => {
+    document.title = title + " - 乌龙看板";
+  }, [title]);
+
+  useEffect(() => {
+    return () => {
+      if (!keepOnUnmount) {
+        document.title = oldTitle;
+      }
+    };
+  });
 };

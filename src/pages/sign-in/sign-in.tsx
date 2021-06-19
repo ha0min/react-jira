@@ -6,14 +6,13 @@ import styled from "@emotion/styled";
 import logo from "../../assets/images/logo.svg";
 import left from "../../assets/images/left.svg";
 import right from "../../assets/images/right.svg";
+import { useDocumentTitle } from "../../utils/base";
 
 export const SignIn = () => {
   const [registerNow, setRegisterNow] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  // useEffect(() => {
-  //     console.log("useEffect", error);
-  // }, [error]);
+  useDocumentTitle("统一认证", false);
 
   return (
     <Container>

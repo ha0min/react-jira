@@ -2,6 +2,7 @@ import React from "react";
 import { Table, TableProps } from "antd";
 import { Project } from "../../utils/constant";
 import dayjs from "dayjs";
+import { Link } from "react-router-dom";
 
 interface ListPropsType extends TableProps<Project> {
   users: any;
@@ -15,9 +16,10 @@ export const List = ({ users, ...props }: ListPropsType) => {
       columns={[
         {
           title: "名称",
-          key: "名称",
-          dataIndex: "name",
           sorter: (a, b) => a.name.localeCompare(b.name),
+          render(value, project) {
+            return <Link to={String(project.id)}>{project.name}</Link>;
+          },
         },
         {
           title: "部门",

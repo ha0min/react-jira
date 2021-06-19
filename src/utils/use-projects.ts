@@ -1,5 +1,5 @@
 import { Project } from "./constant";
-import { cleanObject, useHttp } from "./index";
+import { cleanObject, useHttp } from "./http";
 import { useEffect } from "react";
 import { useAsync } from "./use-async";
 
