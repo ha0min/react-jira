@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { List } from "./list";
 import { SearchPanel } from "./search-panel";
 import { useState } from "react";
@@ -13,12 +13,15 @@ import { useUrlParam } from "../../utils/http";
 
 export const ProjectList = () => {
   const [param, setParam] = useUrlParam(["name", "personId"]);
-  const debounceParam = useDebounce(param, 1500);
+  const numParam = useMemo(
+    () => ({ ...param, personId: Number(param.personId) || undefined }),
+    [param]
+  );
   const {
     isLoading: loading,
     error,
     data: projects,
-  } = useProjects(debounceParam);
+  } = useProjects(useDebounce(numParam, 1500));
   const { data: users } = useUsers();
 
   return (
@@ -26,7 +29,7 @@ export const ProjectList = () => {
       <Typography.Title>项目列表</Typography.Title>
       <SearchPanel
         users={users || []}
-        param={param}
+        param={numParam}
         setParam={setParam}
       ></SearchPanel>
       {error ? (

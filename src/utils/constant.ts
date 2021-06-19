@@ -1,7 +1,7 @@
 export const apiUrl = process.env.REACT_APP_API_URL;
 
 export interface User {
-  id: string;
+  id: number;
   name: string;
   email: string;
   title: string;
@@ -10,9 +10,9 @@ export interface User {
 }
 
 export interface Project {
-  id: string;
+  id: number;
   name: string;
-  personId: string;
+  personId: number;
   pin: boolean;
   organization: string;
   created: number;
