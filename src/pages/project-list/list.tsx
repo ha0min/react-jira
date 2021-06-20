@@ -3,17 +3,52 @@ import { Table, TableProps } from "antd";
 import { Project } from "../../utils/constant";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
+import { useEditProject } from "../../utils/use-projects";
+import { LoveButton } from "../../component/base/love-button";
+import { PushpinFilled, PushpinOutlined } from "@ant-design/icons";
 
 interface ListPropsType extends TableProps<Project> {
   users: any;
+  refresh: () => void;
 }
 
-export const List = ({ users, ...props }: ListPropsType) => {
+//<HeartOutlined /><HeartFilled />
+export const List = ({ users, refresh, ...props }: ListPropsType) => {
+  const { mutate } = useEditProject();
+
+  const pinProject = (id: number) => (pin: boolean) => {
+    console.log(pin);
+    console.log("lovebutton click");
+    mutate({ id, pin }).then(refresh);
+  };
+
+  const pinIcons = {
+    lovedIcon: <PushpinFilled style={{ color: "orangered" }} />,
+    unlovedIcon: <PushpinOutlined style={{ color: "gray" }} />,
+  };
   return (
     <Table
       rowKey={"id"}
       pagination={false}
       columns={[
+        {
+          title: "收藏",
+          align: "center",
+          width: "100px",
+          // defaultSortOrder: "ascend",
+          sortOrder: "ascend",
+          sorter: (x) => (x.pin ? -1 : 1),
+          render(value, project) {
+            return (
+              <LoveButton
+                loved={project.pin}
+                handleClick={pinProject(project.id)}
+                tipTitle={"收藏"}
+                buttonIcons={pinIcons}
+              />
+            );
+          },
+        },
         {
           title: "名称",
           sorter: (a, b) => a.name.localeCompare(b.name),

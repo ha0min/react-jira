@@ -77,3 +77,17 @@ export const useDocumentTitle = (
 // 重置路由
 export const redirectRoute = () =>
   (window.location.href = window.location.origin);
+
+// 返回组件的挂载状态，当组件卸载时为否
+export const useMountedRef = () => {
+  const mountedRef = useRef<boolean>();
+
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  });
+
+  return mountedRef;
+};

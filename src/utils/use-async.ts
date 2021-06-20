@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useMountedRef } from "./base";
 
 interface State<D> {
   error: Error | null;
@@ -25,6 +26,9 @@ export const useAsync = <D>(
     ...defaultState,
     ...initialState,
   });
+  const mountedRef = useMountedRef();
+
+  const [retry, setRetry] = useState(() => () => {});
 
   const setData = (data: D) =>
     setState({
@@ -41,14 +45,26 @@ export const useAsync = <D>(
     });
 
   // 异步请求
-  const run = (promise: Promise<D>) => {
+  const run = (
+    promise: Promise<D>,
+    runConfig?: { retry: () => Promise<D> }
+  ) => {
     if (!promise || !promise.then) {
       throw new Error("run 需要传入 Promise 类型数据");
     }
+
+    setRetry(() => () => {
+      if (runConfig?.retry) {
+        return run(runConfig?.retry(), runConfig);
+      }
+    });
+
     setState({ ...state, stat: "loading" });
     return promise
       .then((data) => {
-        setData(data);
+        if (mountedRef.current) {
+          setData(data);
+        }
         return data;
       })
       .catch((error) => {
@@ -65,6 +81,7 @@ export const useAsync = <D>(
     isLoading: state.stat === "loading",
     isError: state.stat === "error",
     isSuccess: state.stat === "success",
+    retry,
     run,
     setData,
     setError,
