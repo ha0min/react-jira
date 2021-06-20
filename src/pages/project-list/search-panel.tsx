@@ -30,22 +30,6 @@ export const SearchPanel = ({
         />
       </Form.Item>
       <Form.Item>
-        {/*<Select*/}
-        {/*  value={param.personId}*/}
-        {/*  onChange={(value) => {*/}
-        {/*    setParam({*/}
-        {/*      ...param,*/}
-        {/*      personId: value,*/}
-        {/*    });*/}
-        {/*  }}*/}
-        {/*>*/}
-        {/*  <Select.Option value={""}>负责人</Select.Option>*/}
-        {/*  {users.map((userItem: any) => (*/}
-        {/*    <Select.Option value={String(userItem.id)} key={userItem.name}>*/}
-        {/*      {userItem.name}*/}
-        {/*    </Select.Option>*/}
-        {/*  ))}*/}
-        {/*</Select>*/}
         <UserSelector
           value={param.personId}
           onChange={(value) => {

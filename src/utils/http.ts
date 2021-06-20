@@ -4,7 +4,7 @@ import qs from "qs";
 import * as auth from "../context/auth-provider";
 import { useAuth } from "../context/auth-context";
 import { URLSearchParamsInit, useSearchParams } from "react-router-dom";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 interface httpConfigType extends RequestInit {
   token?: string;
@@ -72,10 +72,14 @@ export const query = async (
 
 export const useHttp = () => {
   const { user } = useAuth();
-  return (...[endpoint, config]: Parameters<typeof query>) =>
-    query(endpoint, { ...config, token: user?.token });
+  return useCallback(
+    (...[endpoint, config]: Parameters<typeof query>) =>
+      query(endpoint, { ...config, token: user?.token }),
+    [user?.token]
+  );
 };
 
+// 使用地址键值对保存搜索数据
 export const useUrlParam = <K extends string>(keys: K[]) => {
   const [searchParams, setSearchParam] = useSearchParams();
   return [

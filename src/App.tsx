@@ -1,3 +1,4 @@
+import "./wdry";
 import React from "react";
 import "./App.css";
 import { SignIn } from "./pages/sign-in/sign-in";

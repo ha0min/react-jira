@@ -35,8 +35,8 @@ export const List = ({ users, refresh, ...props }: ListPropsType) => {
           title: "收藏",
           align: "center",
           width: "100px",
-          // defaultSortOrder: "ascend",
-          sortOrder: "ascend",
+          defaultSortOrder: "ascend",
+          // sortOrder: "ascend",
           sorter: (x) => (x.pin ? -1 : 1),
           render(value, project) {
             return (

@@ -45,6 +45,7 @@ export const ProjectList = () => {
     </ProjectListContainer>
   );
 };
+ProjectList.whyDidYouRender = true;
 
 const ProjectListContainer = styled.div`
   padding: 3.2rem;
