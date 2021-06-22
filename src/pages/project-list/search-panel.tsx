@@ -38,7 +38,7 @@ export const SearchPanel = ({
               personId: value,
             });
           }}
-          options={users}
+          selectorOptions={users}
           defaultOptionName={"负责人"}
         />
       </Form.Item>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuth } from "./context/auth-context";
 import { ProjectList } from "./pages/project-list";
 import { Button, Dropdown, Menu } from "antd";
@@ -9,18 +9,26 @@ import { redirectRoute, useDocumentTitle } from "./utils/base";
 import { Navigate, Route, Routes } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ProjectDetail } from "./pages/project-detail/project-detail";
+import { ProjectEditor } from "./component/project-editor/project-editor";
+import { ProjectPopover } from "./component/project-popover/project-popover";
 
 export const AuthenticatedApp = () => {
   useDocumentTitle("项目管理", false);
 
+  const [projectEditorOpen, setProjectEditorOpen] = useState(false);
+
   return (
     <Container>
-      <PageHeader />
+      <PageHeader setProjectEditorOpen={setProjectEditorOpen} />
       <Body>
-        {/*<ProjectList/>*/}
         <Router>
           <Routes>
-            <Route path={"/projects"} element={<ProjectList />} />
+            <Route
+              path={"/projects"}
+              element={
+                <ProjectList setProjectEditorOpen={setProjectEditorOpen} />
+              }
+            />
             <Route
               path={"/projects/:projectId/*"}
               element={<ProjectDetail />}
@@ -29,40 +37,52 @@ export const AuthenticatedApp = () => {
           </Routes>
         </Router>
       </Body>
+      <ProjectEditor
+        projectEditorOpen={projectEditorOpen}
+        handleClose={() => setProjectEditorOpen(false)}
+      />
     </Container>
   );
 };
 
-const PageHeader = () => {
-  const { logout, user } = useAuth();
-
+const PageHeader = (props: {
+  setProjectEditorOpen: (isOpen: boolean) => void;
+}) => {
   return (
     <Header between={true}>
       <HeaderLeft gap={true}>
-        <Button type={"link"} onClick={redirectRoute}>
+        <Button type={"link"} onClick={redirectRoute} style={{ padding: 0 }}>
           <SoftwareLogo width={"17rem"} color={"#2684ff"} />
         </Button>
-        <h2>项目</h2>
-        <h2>用户</h2>
+        <ProjectPopover setProjectEditorOpen={props.setProjectEditorOpen} />
+        <h3>用户</h3>
       </HeaderLeft>
       <HeaderRight>
-        <Dropdown
-          overlay={
-            <Menu>
-              <Menu.Item key={"logout"}>
-                <Button type={"link"} onClick={logout}>
-                  登出
-                </Button>
-              </Menu.Item>
-            </Menu>
-          }
-        >
-          <Button type={"link"} onClick={(event) => event.preventDefault()}>
-            👋你好，{user?.name}
-          </Button>
-        </Dropdown>
+        <UserStatus />
       </HeaderRight>
     </Header>
+  );
+};
+
+const UserStatus = () => {
+  const { logout, user } = useAuth();
+
+  return (
+    <Dropdown
+      overlay={
+        <Menu>
+          <Menu.Item key={"logout"}>
+            <Button type={"link"} onClick={logout}>
+              登出
+            </Button>
+          </Menu.Item>
+        </Menu>
+      }
+    >
+      <Button type={"link"} onClick={(event) => event.preventDefault()}>
+        👋你好，{user?.name}
+      </Button>
+    </Dropdown>
   );
 };
 

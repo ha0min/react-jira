@@ -4,13 +4,16 @@ import { SearchPanel } from "./search-panel";
 import { useDebounce } from "../../utils/base";
 import styled from "@emotion/styled";
 // import Title from "antd/lib/typography/Title";
-import { Button, Typography } from "antd";
+import { Button, Row, Typography } from "antd";
 // import {useAsync} from "../../utils/use-async";
 import { useProjects } from "../../utils/use-projects";
 import { useUsers } from "../../utils/use-users";
 import { useUrlParam } from "../../utils/http";
+import { BaseRow } from "../../component/base/base-row";
 
-export const ProjectList = () => {
+export const ProjectList = (props: {
+  setProjectEditorOpen: (isOpen: boolean) => void;
+}) => {
   const [param, setParam] = useUrlParam(["name", "personId"]);
   const numParam = useMemo(
     () => ({ ...param, personId: Number(param.personId) || undefined }),
@@ -27,12 +30,17 @@ export const ProjectList = () => {
   return (
     <ProjectListContainer>
       <Typography.Title>项目列表</Typography.Title>
-      <Button onClick={retry}>retry</Button>
-      <SearchPanel
-        users={users || []}
-        param={numParam}
-        setParam={setParam}
-      ></SearchPanel>
+      <BaseRow between={true} alignItems={"flex-end"} marginBottom={2}>
+        <SearchPanel
+          users={users || []}
+          param={numParam}
+          setParam={setParam}
+        ></SearchPanel>
+        <Button onClick={() => props.setProjectEditorOpen(true)}>
+          创建项目
+        </Button>
+      </BaseRow>
+
       {error ? (
         <Typography.Text type={"danger"}>{error.message}</Typography.Text>
       ) : null}
@@ -41,6 +49,7 @@ export const ProjectList = () => {
         loading={loading}
         dataSource={projects || []}
         users={users || []}
+        setProjectEditorOpen={props.setProjectEditorOpen}
       ></List>
     </ProjectListContainer>
   );

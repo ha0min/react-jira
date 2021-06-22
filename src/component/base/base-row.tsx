@@ -4,9 +4,10 @@ export const BaseRow = styled.div<{
   gap?: number | boolean;
   between?: boolean;
   marginBottom?: number;
+  alignItems?: string;
 }>`
   display: flex;
-  align-items: center;
+  align-items: ${(props) => (props.alignItems ? props.alignItems : "center")};
   justify-content: ${(props) => (props.between ? "space-between" : undefined)};
   margin-bottom: ${(props) => props.marginBottom + "rem"};
 

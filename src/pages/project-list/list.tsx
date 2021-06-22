@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, TableProps } from "antd";
+import { Button, Menu, Popover, Table, TableProps } from "antd";
 import { Project } from "../../utils/constant";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
@@ -10,8 +10,10 @@ import { PushpinFilled, PushpinOutlined } from "@ant-design/icons";
 interface ListPropsType extends TableProps<Project> {
   users: any;
   refresh: () => void;
+  setProjectEditorOpen: (isOpen: boolean) => void;
 }
 
+// setProjectEditorOpen={props.setProjectEditorOpen}
 //<HeartOutlined /><HeartFilled />
 export const List = ({ users, refresh, ...props }: ListPropsType) => {
   const { mutate } = useEditProject();
@@ -26,6 +28,7 @@ export const List = ({ users, refresh, ...props }: ListPropsType) => {
     lovedIcon: <PushpinFilled style={{ color: "orangered" }} />,
     unlovedIcon: <PushpinOutlined style={{ color: "gray" }} />,
   };
+
   return (
     <Table
       rowKey={"id"}
@@ -83,6 +86,28 @@ export const List = ({ users, refresh, ...props }: ListPropsType) => {
                   ? dayjs(project.created).format("YYYY-MM-DD")
                   : "无"}
               </span>
+            );
+          },
+        },
+        {
+          render(value, project) {
+            return (
+              <Popover
+                trigger={"click"}
+                placement={"right"}
+                title="对项目操作"
+                content={
+                  <Menu>
+                    <Menu.Item>
+                      <Button onClick={() => props.setProjectEditorOpen(true)}>
+                        编辑
+                      </Button>
+                    </Menu.Item>
+                  </Menu>
+                }
+              >
+                ...
+              </Popover>
             );
           },
         },
