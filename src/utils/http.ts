@@ -31,7 +31,7 @@ export const cleanObject = (object: { [key: string]: unknown }) => {
  * @param value
  */
 export const isFalsy = (value: any) => {
-  return value === 0 ? false : !value;
+  return value === 0 ? false : !!value;
 };
 
 /**
