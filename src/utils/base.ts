@@ -2,7 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 
-// 自定义初始化钩子
+/**
+ * 自定义初始化钩子
+ * @param callback
+ */
 export const useMount = (callback: () => void) => {
   useEffect(() => {
     return callback();
@@ -10,7 +13,11 @@ export const useMount = (callback: () => void) => {
   }, []);
 };
 
-// 自定义 debounce 钩子
+/**
+ * 自定义 debounce 钩子
+ * @param value-传入将要使用的debouncedValue
+ * @param delay-debounce延迟
+ */
 export const useDebounce = <V>(value: V, delay?: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
@@ -23,7 +30,10 @@ export const useDebounce = <V>(value: V, delay?: number) => {
   return debouncedValue;
 };
 
-// 队列操作
+/**
+ * 队列操作
+ * @param array
+ */
 export const useArray = <V>(array: V[]) => {
   const [value, setValue] = useState(array);
 
@@ -51,9 +61,11 @@ export const useArray = <V>(array: V[]) => {
   };
 };
 
-// 设置浏览器标题
-// @title: 浏览器标题
-// @keepOnUnmount: 在卸载组件时是否保留传入标题
+/**
+ * 设置浏览器标题
+ * @param title-浏览器标题
+ * @param keepOnUnmount-在卸载组件时是否保留传入标题
+ */
 export const useDocumentTitle = (
   title: string,
   keepOnUnmount: boolean = true
@@ -74,11 +86,15 @@ export const useDocumentTitle = (
   });
 };
 
-// 重置路由
+/**
+ * 重置路由
+ */
 export const redirectRoute = () =>
   (window.location.href = window.location.origin);
 
-// 返回组件的挂载状态，当组件卸载时为否
+/**
+ * 返回组件的挂载状态，当组件卸载时为否
+ */
 export const useMountedRef = () => {
   const mountedRef = useRef<boolean>();
 

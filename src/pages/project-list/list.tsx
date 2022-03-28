@@ -5,7 +5,11 @@ import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { useEditProject } from "../../utils/use-projects";
 import { LoveButton } from "../../component/base/love-button";
-import { PushpinFilled, PushpinOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  PushpinFilled,
+  PushpinOutlined,
+} from "@ant-design/icons";
 
 interface ListPropsType extends TableProps<Project> {
   users: any;
@@ -18,9 +22,12 @@ interface ListPropsType extends TableProps<Project> {
 export const List = ({ users, refresh, ...props }: ListPropsType) => {
   const { mutate } = useEditProject();
 
+  // 克里化写法
   const pinProject = (id: number) => (pin: boolean) => {
-    console.log(pin);
-    console.log("lovebutton click");
+    console.log("love button clicked");
+    console.log("pin:" + pin);
+    console.log("id:" + id);
+    console.log("love button mutated");
     mutate({ id, pin }).then(refresh);
   };
 
@@ -45,7 +52,7 @@ export const List = ({ users, refresh, ...props }: ListPropsType) => {
             return (
               <LoveButton
                 loved={project.pin}
-                handleClick={pinProject(project.id)}
+                onClickedChange={pinProject(project.id)}
                 tipTitle={"收藏"}
                 buttonIcons={pinIcons}
               />
@@ -98,7 +105,7 @@ export const List = ({ users, refresh, ...props }: ListPropsType) => {
                 title="对项目操作"
                 content={
                   <Menu>
-                    <Menu.Item>
+                    <Menu.Item key={"编辑"}>
                       <Button onClick={() => props.setProjectEditorOpen(true)}>
                         编辑
                       </Button>
@@ -106,7 +113,7 @@ export const List = ({ users, refresh, ...props }: ListPropsType) => {
                   </Menu>
                 }
               >
-                ...
+                <EditOutlined />
               </Popover>
             );
           },

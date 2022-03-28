@@ -10,15 +10,12 @@ import { useProjects } from "../../utils/use-projects";
 import { useUsers } from "../../utils/use-users";
 import { useUrlParam } from "../../utils/http";
 import { BaseRow } from "../../component/base/base-row";
+import { useProjectsSearchParams } from "./util";
 
 export const ProjectList = (props: {
   setProjectEditorOpen: (isOpen: boolean) => void;
 }) => {
-  const [param, setParam] = useUrlParam(["name", "personId"]);
-  const numParam = useMemo(
-    () => ({ ...param, personId: Number(param.personId) || undefined }),
-    [param]
-  );
+  const [numParam, setParam] = useProjectsSearchParams();
   const {
     isLoading: loading,
     error,
@@ -54,7 +51,7 @@ export const ProjectList = (props: {
     </ProjectListContainer>
   );
 };
-ProjectList.whyDidYouRender = true;
+// ProjectList.whyDidYouRender = true;
 
 const ProjectListContainer = styled.div`
   padding: 3.2rem;

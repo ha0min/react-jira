@@ -6,5 +6,5 @@ export const UserSelector = (
   props: React.ComponentProps<typeof IdSelector>
 ) => {
   const { data: users } = useUsers();
-  return <IdSelector selectorOptions={users || []} {...props} />;
+  return <IdSelector options={users || []} {...props} />;
 };

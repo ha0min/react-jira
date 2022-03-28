@@ -11,7 +11,10 @@ interface httpConfigType extends RequestInit {
   data?: object;
 }
 
-// 去除无意义对象键值对，其中传入对象
+/**
+ * 去除无意义对象键值对，其中传入对象
+ * @param object
+ */
 export const cleanObject = (object: { [key: string]: unknown }) => {
   const result = { ...object };
   Object.keys(result).forEach((key) => {
@@ -23,17 +26,30 @@ export const cleanObject = (object: { [key: string]: unknown }) => {
   return result;
 };
 
-// 判断是否为假
+/**
+ * 判断是否为假
+ * @param value
+ */
 export const isFalsy = (value: any) => {
   return value === 0 ? false : !value;
 };
 
-// 判断是否为空
+/**
+ * 判断是否为空
+ * @param value
+ */
 export const isVoid = (value: any) => {
   return value === undefined || value === null || value === "";
 };
 
-// 封装的请求函数
+/**
+ * 封装的请求函数
+ * @param endpoint-目标
+ * @param data-Content-Type
+ * @param token-userToken
+ * @param headers
+ * @param otherConfig
+ */
 export const query = async (
   endpoint: string,
   { data, token, headers, ...otherConfig }: httpConfigType = {}
@@ -70,6 +86,10 @@ export const query = async (
     });
 };
 
+/**
+ * http请求函数
+ * @return useCallback
+ */
 export const useHttp = () => {
   const { user } = useAuth();
   return useCallback(
@@ -79,7 +99,10 @@ export const useHttp = () => {
   );
 };
 
-// 使用地址键值对保存搜索数据
+/**
+ * 使用地址键值对保存搜索数据
+ * @param keys
+ */
 export const useUrlParam = <K extends string>(keys: K[]) => {
   const [searchParams, setSearchParam] = useSearchParams();
   return [
@@ -87,7 +110,7 @@ export const useUrlParam = <K extends string>(keys: K[]) => {
       () =>
         keys.reduce((prev, key) => {
           const o = { ...prev, [key]: searchParams.get(key) || "" };
-          console.log("reduce", o);
+          // console.log("reduce", o);
           return o;
         }, {} as { [key in K]: string }),
       [searchParams]
@@ -97,7 +120,7 @@ export const useUrlParam = <K extends string>(keys: K[]) => {
         ...Object.fromEntries(searchParams),
         ...params,
       }) as URLSearchParamsInit;
-      console.log("clean Object", o);
+      // console.log("clean Object", o);
       return setSearchParam(o);
     },
   ] as const;
