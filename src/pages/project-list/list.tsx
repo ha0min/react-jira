@@ -14,7 +14,8 @@ import {
 interface ListPropsType extends TableProps<Project> {
   users: any;
   refresh: () => void;
-  setProjectEditorOpen: (isOpen: boolean) => void;
+  // setProjectEditorOpen: (isOpen: boolean) => void;
+  createProjectButton: JSX.Element;
 }
 
 // setProjectEditorOpen={props.setProjectEditorOpen}
@@ -44,7 +45,7 @@ export const List = ({ users, refresh, ...props }: ListPropsType) => {
         {
           title: "收藏",
           align: "center",
-          width: "100px",
+          width: "10rem",
           defaultSortOrder: "ascend",
           // sortOrder: "ascend",
           sorter: (x) => (x.pin ? -1 : 1),
@@ -106,9 +107,9 @@ export const List = ({ users, refresh, ...props }: ListPropsType) => {
                 content={
                   <Menu>
                     <Menu.Item key={"编辑"}>
-                      <Button onClick={() => props.setProjectEditorOpen(true)}>
-                        编辑
-                      </Button>
+                      {/*<Button onClick={() => props.setProjectEditorOpen(true)}>*/}
+                      {/*  编辑*/}
+                      {/*</Button>*/}
                     </Menu.Item>
                   </Menu>
                 }

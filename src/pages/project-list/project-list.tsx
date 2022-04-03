@@ -12,9 +12,7 @@ import { useUrlParam } from "../../utils/http";
 import { BaseRow } from "../../component/base/base-row";
 import { useProjectsSearchParams } from "./util";
 
-export const ProjectList = (props: {
-  setProjectEditorOpen: (isOpen: boolean) => void;
-}) => {
+export const ProjectList = (props: { createProjectButton: JSX.Element }) => {
   const [numParam, setParam] = useProjectsSearchParams();
   const {
     isLoading: loading,
@@ -33,9 +31,7 @@ export const ProjectList = (props: {
           param={numParam}
           setParam={setParam}
         ></SearchPanel>
-        <Button onClick={() => props.setProjectEditorOpen(true)}>
-          创建项目
-        </Button>
+        <div style={{ minWidth: "8rem" }}>{props.createProjectButton}</div>
       </BaseRow>
 
       {error ? (
@@ -46,7 +42,7 @@ export const ProjectList = (props: {
         loading={loading}
         dataSource={projects || []}
         users={users || []}
-        setProjectEditorOpen={props.setProjectEditorOpen}
+        createProjectButton={props.createProjectButton}
       ></List>
     </ProjectListContainer>
   );

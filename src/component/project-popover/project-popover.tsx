@@ -14,9 +14,7 @@ import { Link } from "react-router-dom";
 import { isFalsy } from "../../utils/http";
 import { LeftAlignButton } from "../base/base";
 
-export const ProjectPopover = (props: {
-  setProjectEditorOpen: (isOpen: boolean) => void;
-}) => {
+export const ProjectPopover = (props: { createProjectButton: JSX.Element }) => {
   const { data: projects, isLoading } = useProjects();
   console.log("ProjectPopover()");
 
@@ -76,14 +74,7 @@ export const ProjectPopover = (props: {
         )}
       </Menu.ItemGroup>
       <Menu.ItemGroup title="快捷操作">
-        <Menu.Item key={"createProject"}>
-          <LeftAlignButton
-            block={true}
-            onClick={() => props.setProjectEditorOpen(true)}
-          >
-            创建项目
-          </LeftAlignButton>
-        </Menu.Item>
+        <Menu.Item key={"createProject"}>{props.createProjectButton}</Menu.Item>
       </Menu.ItemGroup>
     </PopoverMenu>
   );
@@ -96,19 +87,23 @@ export const ProjectPopover = (props: {
       <Dropdown
         overlay={menuContent}
         placement={"bottom"}
-        trigger={["hover", "click"]}
+        trigger={["hover"]}
         onVisibleChange={onMenuOpen}
       >
-        <h3>项目</h3>
+        <Button type={"text"} onClick={testClick}>
+          <h3>项目</h3>
+        </Button>
       </Dropdown>
     </>
   );
 };
 
-const PopoverContainer = styled.div`
-  min-width: 28rem;
-  margin: 1rem 1rem 1rem 1rem;
-`;
+const testClick = () => {
+  console.log("testClick()");
+  console.log("window.location.href: " + window.location.href);
+  console.log("window.location.origin: " + window.location.origin);
+  window.location.href = window.location.origin + "/projects";
+};
 
 const PopoverMenu = styled(Menu)`
   min-width: 28rem;

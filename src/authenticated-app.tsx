@@ -11,22 +11,27 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { ProjectDetail } from "./pages/project-detail/project-detail";
 import { ProjectEditor } from "./component/project-editor/project-editor";
 import { ProjectPopover } from "./component/project-popover/project-popover";
+import { LeftAlignButton } from "./component/base/base";
 
 export const AuthenticatedApp = () => {
   useDocumentTitle("项目管理", false);
 
   const [projectEditorOpen, setProjectEditorOpen] = useState(false);
 
+  const AuCreateProjectButton = () => {
+    return <CreateProjectButton setProjectEditorOpen={setProjectEditorOpen} />;
+  };
+
   return (
     <Container>
-      <PageHeader setProjectEditorOpen={setProjectEditorOpen} />
+      <PageHeader createProjectButton={<AuCreateProjectButton />} />
       <Body>
         <Router>
           <Routes>
             <Route
               path={"/projects"}
               element={
-                <ProjectList setProjectEditorOpen={setProjectEditorOpen} />
+                <ProjectList createProjectButton={<AuCreateProjectButton />} />
               }
             />
             <Route
@@ -45,16 +50,27 @@ export const AuthenticatedApp = () => {
   );
 };
 
-const PageHeader = (props: {
+const CreateProjectButton = (props: {
   setProjectEditorOpen: (isOpen: boolean) => void;
 }) => {
+  return (
+    <LeftAlignButton
+      block={true}
+      onClick={() => props.setProjectEditorOpen(true)}
+    >
+      创建项目
+    </LeftAlignButton>
+  );
+};
+
+const PageHeader = (props: { createProjectButton: JSX.Element }) => {
   return (
     <Header between={true}>
       <HeaderLeft gap={true}>
         <Button type={"link"} onClick={redirectRoute} style={{ padding: 0 }}>
           <SoftwareLogo width={"17rem"} color={"#2684ff"} />
         </Button>
-        <ProjectPopover setProjectEditorOpen={props.setProjectEditorOpen} />
+        <ProjectPopover createProjectButton={props.createProjectButton} />
         <h3>用户</h3>
       </HeaderLeft>
       <HeaderRight>

@@ -32,7 +32,9 @@ export const LoveButton = ({
   const customTipTitle = tipTitle || "收藏";
 
   return (
-    <Tooltip title={loved ? customTipTitle : "取消" + customTipTitle}>
+    <Tooltip
+      title={loved ? "点击以取消" + customTipTitle : "点击以" + customTipTitle}
+    >
       <Button
         type="text"
         onClick={() => (onClickedChange ? onClickedChange(!loved) : !loved)}
