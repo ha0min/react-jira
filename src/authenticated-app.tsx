@@ -16,36 +16,22 @@ import { LeftAlignButton } from "./component/base/base";
 export const AuthenticatedApp = () => {
   useDocumentTitle("项目管理", false);
 
-  const [projectEditorOpen, setProjectEditorOpen] = useState(false);
-
-  const AuCreateProjectButton = () => {
-    return <CreateProjectButton setProjectEditorOpen={setProjectEditorOpen} />;
-  };
-
   return (
     <Container>
-      <PageHeader createProjectButton={<AuCreateProjectButton />} />
-      <Body>
-        <Router>
+      <Router>
+        <PageHeader />
+        <Body>
           <Routes>
-            <Route
-              path={"/projects"}
-              element={
-                <ProjectList createProjectButton={<AuCreateProjectButton />} />
-              }
-            />
+            <Route path={"/projects"} element={<ProjectList />} />
             <Route
               path={"/projects/:projectId/*"}
               element={<ProjectDetail />}
             />
             <Navigate to={"/projects"} />
           </Routes>
-        </Router>
-      </Body>
-      <ProjectEditor
-        projectEditorOpen={projectEditorOpen}
-        handleClose={() => setProjectEditorOpen(false)}
-      />
+        </Body>
+        <ProjectEditor />
+      </Router>
     </Container>
   );
 };
@@ -63,14 +49,14 @@ const CreateProjectButton = (props: {
   );
 };
 
-const PageHeader = (props: { createProjectButton: JSX.Element }) => {
+const PageHeader = () => {
   return (
     <Header between={true}>
       <HeaderLeft gap={true}>
         <Button type={"link"} onClick={redirectRoute} style={{ padding: 0 }}>
           <SoftwareLogo width={"17rem"} color={"#2684ff"} />
         </Button>
-        <ProjectPopover createProjectButton={props.createProjectButton} />
+        <ProjectPopover />
         <h3>用户</h3>
       </HeaderLeft>
       <HeaderRight>

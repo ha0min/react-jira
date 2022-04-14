@@ -10,12 +10,14 @@ import {
   PushpinFilled,
   PushpinOutlined,
 } from "@ant-design/icons";
+import { CreateProjectButton } from "../../component/base/base";
+import { useProjectEditor } from "./util";
 
 interface ListPropsType extends TableProps<Project> {
   users: any;
   refresh: () => void;
   // setProjectEditorOpen: (isOpen: boolean) => void;
-  createProjectButton: JSX.Element;
+  // createProjectButton: JSX.Element;
 }
 
 // setProjectEditorOpen={props.setProjectEditorOpen}
@@ -36,6 +38,8 @@ export const List = ({ users, refresh, ...props }: ListPropsType) => {
     lovedIcon: <PushpinFilled style={{ color: "orangered" }} />,
     unlovedIcon: <PushpinOutlined style={{ color: "gray" }} />,
   };
+
+  const { open: projectEditorOpen } = useProjectEditor();
 
   return (
     <Table
@@ -110,7 +114,9 @@ export const List = ({ users, refresh, ...props }: ListPropsType) => {
                       {/*<Button onClick={() => props.setProjectEditorOpen(true)}>*/}
                       {/*  编辑*/}
                       {/*</Button>*/}
-                      {props.createProjectButton}
+                      <CreateProjectButton
+                        projectEditorOpen={projectEditorOpen}
+                      />
                     </Menu.Item>
                   </Menu>
                 }

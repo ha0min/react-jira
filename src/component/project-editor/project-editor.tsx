@@ -1,17 +1,13 @@
 import { Button, Drawer } from "antd";
+import { useProjectEditor } from "../../pages/project-list/util";
 
-export const ProjectEditor = (props: {
-  projectEditorOpen: boolean;
-  handleClose: () => void;
-}) => {
+export const ProjectEditor = () => {
+  const { isProjectEditorOpen, close } = useProjectEditor();
+
   return (
-    <Drawer
-      onClose={props.handleClose}
-      width={"90%"}
-      visible={props.projectEditorOpen}
-    >
+    <Drawer onClose={close} width={"90%"} visible={isProjectEditorOpen}>
       <h1>Project Model</h1>
-      <Button onClick={props.handleClose}>关闭</Button>
+      <Button onClick={close}>关闭</Button>
     </Drawer>
   );
 };

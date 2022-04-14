@@ -7,18 +7,20 @@ import {
   Popover,
   Typography,
 } from "antd";
-import { useProjects } from "../../utils/use-projects";
+import { useEditProject, useProjects } from "../../utils/use-projects";
 import React from "react";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import { isFalsy } from "../../utils/http";
-import { LeftAlignButton } from "../base/base";
+import { CreateProjectButton, LeftAlignButton } from "../base/base";
+import { useProjectEditor } from "../../pages/project-list/util";
 
-export const ProjectPopover = (props: { createProjectButton: JSX.Element }) => {
-  const { data: projects, isLoading } = useProjects();
+export const ProjectPopover = () => {
+  const { data: projects } = useProjects();
   console.log("ProjectPopover()");
 
   let pinnedProjects = projects?.filter((project) => project.pin);
+  const { open: projectEditorOpen } = useProjectEditor();
 
   let hasPinnedProjects = isFalsy(pinnedProjects?.length);
   console.log(pinnedProjects?.length);
@@ -74,7 +76,9 @@ export const ProjectPopover = (props: { createProjectButton: JSX.Element }) => {
         )}
       </Menu.ItemGroup>
       <Menu.ItemGroup title="快捷操作">
-        <Menu.Item key={"createProject"}>{props.createProjectButton}</Menu.Item>
+        <Menu.Item key={"createProject"}>
+          <CreateProjectButton projectEditorOpen={projectEditorOpen} />
+        </Menu.Item>
       </Menu.ItemGroup>
     </PopoverMenu>
   );

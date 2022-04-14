@@ -10,9 +10,9 @@ import { useProjects } from "../../utils/use-projects";
 import { useUsers } from "../../utils/use-users";
 import { useUrlParam } from "../../utils/http";
 import { BaseRow } from "../../component/base/base-row";
-import { useProjectsSearchParams } from "./util";
+import { useProjectEditor, useProjectsSearchParams } from "./util";
 
-export const ProjectList = (props: { createProjectButton: JSX.Element }) => {
+export const ProjectList = () => {
   const [numParam, setParam] = useProjectsSearchParams();
   const {
     isLoading: loading,
@@ -31,7 +31,7 @@ export const ProjectList = (props: { createProjectButton: JSX.Element }) => {
           param={numParam}
           setParam={setParam}
         ></SearchPanel>
-        <div style={{ minWidth: "8rem" }}>{props.createProjectButton}</div>
+        <div style={{ minWidth: "8rem" }}></div>
       </BaseRow>
 
       {error ? (
@@ -42,7 +42,6 @@ export const ProjectList = (props: { createProjectButton: JSX.Element }) => {
         loading={loading}
         dataSource={projects || []}
         users={users || []}
-        createProjectButton={props.createProjectButton}
       ></List>
     </ProjectListContainer>
   );
