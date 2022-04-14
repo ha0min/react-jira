@@ -86,7 +86,7 @@ export const ProjectPopover = (props: { createProjectButton: JSX.Element }) => {
       {/*</Popover>*/}
       <Dropdown
         overlay={menuContent}
-        placement={"bottom"}
+        placement={"bottomCenter"}
         trigger={["hover"]}
         onVisibleChange={onMenuOpen}
       >

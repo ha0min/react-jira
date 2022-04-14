@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Menu, Popover, Table, TableProps } from "antd";
+import { Menu, Popover, Table, TableProps } from "antd";
 import { Project } from "../../utils/constant";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
@@ -110,6 +110,7 @@ export const List = ({ users, refresh, ...props }: ListPropsType) => {
                       {/*<Button onClick={() => props.setProjectEditorOpen(true)}>*/}
                       {/*  编辑*/}
                       {/*</Button>*/}
+                      {props.createProjectButton}
                     </Menu.Item>
                   </Menu>
                 }

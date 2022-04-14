@@ -28,7 +28,7 @@ const useSafeDispatch = <D>(dispatch: (...args: D[]) => void) => {
     (...args: D[]) => {
       return mountedRef.current ? dispatch(...args) : void 0;
     },
-    [mountedRef, mountedRef]
+    [mountedRef, mountedRef, dispatch]
   );
 };
 

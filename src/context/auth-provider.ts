@@ -32,7 +32,10 @@ export const login = (data: { username: string; password: string }) => {
   // return
 };
 
-// 注册
+/**
+ * 注册
+ * @param data
+ */
 export const register = (data: { username: string; password: string }) => {
   return fetch(`${apiUrl}/register`, {
     method: "POST",

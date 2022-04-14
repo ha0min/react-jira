@@ -74,3 +74,7 @@ const Title = styled.h2`
   margin-bottom: 2.4rem;
   color: rgb(94, 108, 132);
 `;
+
+export const LongButton = styled(Button)`
+  width: 100%;
+`;
