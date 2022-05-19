@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useAuth } from "./context/auth-context";
 import { ProjectList } from "./pages/project-list";
 import { Button, Dropdown, Menu } from "antd";
@@ -11,7 +11,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { ProjectDetail } from "./pages/project-detail/project-detail";
 import { ProjectEditor } from "./component/project-editor/project-editor";
 import { ProjectPopover } from "./component/project-popover/project-popover";
-import { LeftAlignButton } from "./component/base/base";
 
 export const AuthenticatedApp = () => {
   useDocumentTitle("项目管理", false);
@@ -33,19 +32,6 @@ export const AuthenticatedApp = () => {
         <ProjectEditor />
       </Router>
     </Container>
-  );
-};
-
-const CreateProjectButton = (props: {
-  setProjectEditorOpen: (isOpen: boolean) => void;
-}) => {
-  return (
-    <LeftAlignButton
-      block={true}
-      onClick={() => props.setProjectEditorOpen(true)}
-    >
-      创建项目
-    </LeftAlignButton>
   );
 };
 
